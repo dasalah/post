@@ -25,7 +25,7 @@ typedef struct {
 	string FullDate;
 } date;
 
-void darj() {
+void darj() { 
 
 	date d;
 	marsole m;
@@ -83,7 +83,7 @@ void darj() {
 }
 
 
-void tahvil() { //function 2  OK
+void tahvil() { //function 2  OK      #struct no made
 	fstream get("get.txt", ios::app); //create file 2 ok
 	if (!get) {
 		cerr << "somrthing went wrong during opening the file please make sure that the file that you chose exists!" << endl;
@@ -156,7 +156,32 @@ void rate(int rate,float price) { //not okay.
 
 
 
-void info() {
+
+void DayInfo() {
+
+	marsole m;
+	date d;
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+void info() { // #struct no made
 	string code;
 	string line;
 	cout << "enter your post code:";
