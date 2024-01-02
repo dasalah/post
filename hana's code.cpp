@@ -17,7 +17,7 @@ typedef struct {
 	string sendercity;
 	string recivercity;
 	string viewpost;
-	string viewpaid;
+	int viewpaid[12];
 	
 } marsole;
 typedef struct {
@@ -92,70 +92,89 @@ void tahvil() { //function 2  OK      #struct no made
 		cerr << "somrthing went wrong during opening the file please make sure that the file that you chose exists!" << endl;
 		exit(1);
 	}
-		int p, d, m;
-		cin >> p;
+	marsole reacive;
+	date Reacive;
+	int i;
 		cout << "enter your postcode:" << endl;
-		get.close();
-		for (int i = 0; i < 1; i++) {
+		cin >> reacive.postcode;
+		
+		
+		for (i = 0; i < 1; i++) {
 			cout << "enter reciving day:" << endl;
-			cin >> d;
-			if (d > 31 || d < 0) { i--; cout << "Please enter the date correctly\n"; }
+			cin >> Reacive.rday;
+			if (Reacive.rday > 31 || Reacive.rday < 0) { i--; cout << "Please enter the date correctly\n"; }
 		}
-		for (int i = 0; i < 1; i++) {
+		for (i = 0; i < 1; i++) {
 			cout << "enter reciving month:" << endl;
-			cin >> m;
-			if (m > 12 || m < 0) { i--; cout << "Please enter the date correctly\n"; };
+			cin >> Reacive.rmonth;
+			if (Reacive.rmonth > 12 || Reacive.rmonth < 0) { i--; cout << "Please enter the date correctly\n"; };
 		}
-		get << p << setw(10) << m << '/' << d << endl;	
-		cout << "Data successfully recorded" << endl;
-
+		get << reacive.postcode << setw(10) << Reacive.rmonth << '/' << Reacive.rday << endl;
+		cout << "Data successfully recorded." << endl;
+		get.close();
 }
-/*
-void rate(int rate,float price) { //not okay.
-	float sum[12];
-	sum[0] = 0;
-	int month;
 
-	
-	switch (rate)
-
+void rate() { //not okay.
+	marsole m;
+	date d;
+	string line;
+	fstream rate("file.txt", ios::in);
+	while (!rate.eof())
 	{
-	case 1:
-			sum[1] += price;
-	case 2:
-			sum[2] += price;
-	case 3:
-			sum[3] += price;
-	case 4:
-			sum[4] += price;
-	case 5:
-			sum[5] += price;
-	case 6:
-			sum[6] += price;
-	case 7:
-			sum[7] += price;
-	case 8:
-			sum[8] += price;
-	case 9:
-			sum[9] += price;
-	case 10:
-			sum[10] += price;
-	case 11:
-			sum[11] += price;
-	case 12:
-			sum[12] += price;
+		//rate.getline(line,sizeof(line),stdin);
+		rate >> m.postcode>> m.sendername >> m.sendercity >> d.FullDate >> m.recivername >> m.recivercity >> m.postpaid;
+		if (d.FullDate[0] == '0' && d.FullDate[1] == '1') {
+			m.viewpost[1] += m.postpaid;
+		}
+		if (d.FullDate[0] == '0' && d.FullDate[1] == '2') {
+			m.viewpost[2] += m.postpaid;
 
-	default:
-		break;
+		}
+		if (d.FullDate[0] == '0' && d.FullDate[1] == '3') {
+			m.viewpost[3] += m.postpaid;
+
+		}
+		if (d.FullDate[0] == '0' && d.FullDate[1] == '4') {
+			m.viewpost[4] += m.postpaid;
+
+		}
+		if (d.FullDate[0] == '0' && d.FullDate[1] == '5') {
+			m.viewpost[5] += m.postpaid;
+
+		}
+		if (d.FullDate[0] == '0' && d.FullDate[1] == '6') {
+			m.viewpost[6] += m.postpaid;
+
+		}
+		if (d.FullDate[0] == '0' && d.FullDate[1] == '7') {
+			m.viewpost[7] += m.postpaid;
+
+		}
+		if (d.FullDate[0] == '0' && d.FullDate[1] == '8') {
+			m.viewpost[8] += m.postpaid;
+
+		}
+		if (d.FullDate[0] == '0' && d.FullDate[1] == '9') {
+			m.viewpost[9] += m.postpaid;
+
+		}
+		if (d.FullDate[0] == '1' && d.FullDate[1] == '0') {
+			m.viewpost[10] += m.postpaid;
+
+		}
+		if (d.FullDate[0] == '1' && d.FullDate[1] == '1') {
+			m.viewpost[11] += m.postpaid;
+
+		}
+		if (d.FullDate[0] == '1' && d.FullDate[1] == '2') {
+			m.viewpost[12] += m.postpaid;
+
+		}
+		
 	}
 
-	cout << "enter your month: ";
-	cin >> month;
-	cout << "price is:" << sum[month];
-
 
 }
-*/
 
 
 
@@ -165,89 +184,81 @@ void rate(int rate,float price) { //not okay.
 
 
 
-void info() { // #struct no made
+
+void info() { 
 	string code;
 	string line;
 	cout << "enter your post code:";
 	cin >> code;
 	fstream data("file.txt", ios::in);
 	fstream DataDate("get.txt", ios::in);
+	if (!data&&DataDate) {
+		cerr << "somrthing went wrong during opening the file please make sure that the file that you chose exists!" << endl;
+		exit(1);
+	}
 
 	while (!data.eof()) { //read a line
 		
 		getline(data, line);
 		while(1){
-			bool test = !(line.find(code));
+			size_t test = (line.find(code));
 			
-		if (test) {				// find word 
+		if (test<sizeof(line)) {				// find word 
 			cout << line << endl;//outing without date receive  
 			                                      
 													while (!DataDate.eof()){    //read date receive 
-														int j = 0;
+														
 													string Line;
 													getline(DataDate, Line);
-													while (1) {
+													
 
-														bool test = Line.find(code, j);
-														if (!test) {
+														size_t test = Line.find(code, 0);
+														if (test<sizeof(line)) {
 
 															cout << Line << endl;;
-															break;
 														}
-														else
-														{
-															j++;
-															break;
+														
 
-														}
-
-				}
+																			}
 				
 
 
-									}
+									
 
-			break;
+		
 		}
-		else
-		{
-			
-			break;
-		}
-
 	}
 	}
 
-
+	data.close();
+	DataDate.close();
 }
 void DayInfo() {
 	marsole m;							// create struct
 	date d;
 	fstream file("file.txt", ios::in); //open files
 	fstream date("get.txt", ios::in);
+	if (!file && date) {
+		cerr << "somrthing went wrong during opening the file please make sure that the file that you chose exists!" << endl;
+		exit(1);
+	}
 	cout << "enter your date  (MM/DD)" << endl;; //get data
 	cin >> d.FullDate;
 	string line;
 	string out;
-	int i;
 	while (!file.eof())
 	{
+
 		getline(file, line);
 		size_t check = line.find(d.FullDate, 0); //find date.
-		if (check < 100) {
-			
-			for (i = 0; line[i] != ' '; i++) {
-				
-				out[i] = line[i];
-				
+		if (check < size(line)) {
+			cout << line << endl;
 
-			}
-			cout << out;
 		}
 	}
 	file.close();
 	date.close();
-
+	
 }
 
 
@@ -287,6 +298,9 @@ int main() {
 		case 4:
 		info();
 		break;
+		case 7:
+			rate();
+			break;
 		case 0:
 			continue;
 		default: cout << "wrong number";
@@ -295,7 +309,9 @@ int main() {
 		char ch;
 		cin >> ch;
 		if (ch == 'n' || ch == 'N') break;
-					
+		else {
+			break;
+		}
 		}
 	}
 	
